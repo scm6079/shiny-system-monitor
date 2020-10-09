@@ -7,9 +7,8 @@
     Loading...
   </div>
 
-  <p>Count: {{ monitor }}</p>
-
   <button @click="refresh()">Refresh</button>
+  <button @click="cancelAutoUpdate()">Cancel</button>
 </template>
 
 <script>
@@ -27,16 +26,26 @@ export default {
     Speedometer,
     LoadChart,
   },
+  data() {
+    return {
+      timer: ''
+    }
+  },
   setup() {
     const store = useStore();
     const loading = computed(() => store.state.loading);
     const monitor = computed(() => store.state.monitor);
     function refresh() {
-      // store.commit("increment");
       store.dispatch('refresh');
     }
     refresh();
     return { loading, monitor, refresh };
+  },
+  methods: {
+    cancelAutoUpdate () { clearInterval(this.timer) }
+  },
+  mounted () {
+    this.timer = setInterval(this.refresh, 5000);
   }
 };
 </script>

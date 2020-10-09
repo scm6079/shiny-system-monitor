@@ -1,12 +1,13 @@
 <template>
-  <div>
-    TEMP GAUGE TODO
-    monitor: {{monitor}}
-  </div>
+  <section>
+    <div>CPU {{ cpuTemp }}</div>
+    <div>GPU {{ gpuTemp }}</div>
+    <div>FAN SPEED {{ fanSpeed }}</div>
+  </section>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'TempGauge',
@@ -14,11 +15,20 @@ export default {
     msg: String
   },
   computed: {
-    ...mapState(['monitor'])
+    ...mapState(['monitor']),
+    ...mapGetters({
+      cpuTemp: 'cpuTemp',
+      gpuTemp: 'gpuTemp',
+      fanSpeed: 'fanSpeed',
+    })
   },
 }
 </script>
 
 <style scoped>
-
+section {
+  border: 1px solid red;
+  padding: 10px;
+  margin: 10px;
+}
 </style>
