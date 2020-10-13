@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div>CPU Usage {{ cpuUsage }}</div>
-    <div>RAM Usage {{ ramUsage }}</div>
+    <div>CPU Usage {{ cpuUsage }}%</div>
+    <div>RAM Usage {{ ramUsage }}%</div>
   </section>
 </template>
 

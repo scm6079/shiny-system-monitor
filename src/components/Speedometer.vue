@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div>CPU {{ cpuSpeed }}</div>
-    <div>GPU {{ gpuSpeed }}</div>
+    <div>CPU {{ cpuSpeed.toLocaleString() }} MHz</div>
+    <div>GPU {{ gpuSpeed.toLocaleString() }} MHz</div>
   </section>
 </template>
 
@@ -18,7 +18,8 @@ export default {
     ...mapGetters({
       cpuSpeed: 'cpuSpeed',
       gpuSpeed: 'gpuSpeed',
-    })
+    }),
+
   },
 }
 </script>

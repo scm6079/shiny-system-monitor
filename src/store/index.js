@@ -72,7 +72,7 @@ const getters = {
             if( tempSensors && tempSensors.Children && tempSensors.Children.length ) {
                 let cpuTotal = tempSensors.Children.find( item => item.Text === 'CPU Package' );
                 if( cpuTotal ) {
-                    return cpuTotal.Value;
+                    return parseFloat(cpuTotal.Value);
                 }
             }
         }
@@ -85,7 +85,7 @@ const getters = {
             if( tempSensors && tempSensors.Children && tempSensors.Children.length ) {
                 let gpuTotal = tempSensors.Children.find( item => item.Text === 'GPU Core' );
                 if( gpuTotal ) {
-                    return gpuTotal.Value;
+                    return parseFloat(gpuTotal.Value);
                 }
             }
         }
@@ -100,7 +100,7 @@ const getters = {
                 if( fanSensor && fanSensor.Children && fanSensor.Children.length ) {
                     let primaryFan = fanSensor.Children.find( item => item.Text === 'Fan #2' );
                     if( primaryFan ) {
-                        return primaryFan.Value;
+                        return parseFloat(primaryFan.Value);
                     }
                 }
             }
@@ -115,7 +115,7 @@ const getters = {
             if( sensors && sensors.Children && sensors.Children.length ) {
                 let cpuTotal = sensors.Children.find( item => item.Text === 'CPU Core #1' );
                 if( cpuTotal ) {
-                    return cpuTotal.Value;
+                    return parseFloat(cpuTotal.Value);
                 }
             }
         }
@@ -128,7 +128,7 @@ const getters = {
             if( sensors && sensors.Children && sensors.Children.length ) {
                 let gpuTotal = sensors.Children.find( item => item.Text === 'GPU Core' );
                 if( gpuTotal ) {
-                    return gpuTotal.Value;
+                    return parseFloat(gpuTotal.Value);
                 }
             }
         }
@@ -142,7 +142,7 @@ const getters = {
             if( sensors && sensors.Children && sensors.Children.length ) {
                 let cpuTotal = sensors.Children.find( item => item.Text === 'CPU Total' );
                 if( cpuTotal ) {
-                    return cpuTotal.Value;
+                    return parseFloat(cpuTotal.Value);
                 }
             }
         }
@@ -156,20 +156,12 @@ const getters = {
             if( sensors && sensors.Children && sensors.Children.length ) {
                 let ramTotal = sensors.Children.find( item => item.Text === 'Memory' );
                 if( ramTotal ) {
-                    return ramTotal.Value;
+                    return parseFloat(ramTotal.Value);
                 }
             }
         }
         return 0;
     },
-
-    // ramTODO: (state, getters) => {
-    //     return getters.getNodeByHardwareType(HARDWARE_TYPE_RAM);
-    // },
-    // fanTODO: (state, getters) => {
-    //     return getters.getNodeByHardwareType(HARDWARE_TYPE_MOTHERBOARD);
-    // },
-
 }
 
 export default createStore({

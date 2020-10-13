@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div>CPU {{ cpuTemp }}</div>
-    <div>GPU {{ gpuTemp }}</div>
-    <div>FAN SPEED {{ fanSpeed }}</div>
+    <div>CPU {{ cpuTemp }}&deg; C</div>
+    <div>GPU {{ gpuTemp }}&deg; C</div>
+    <div>FAN SPEED {{ fanSpeed.toLocaleString() }} RPM</div>
   </section>
 </template>
 
