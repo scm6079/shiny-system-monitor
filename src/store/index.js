@@ -6,12 +6,13 @@ const MONITOR_URL = 'http://192.168.144.18:8080/test-data.json';
 const HARDWARE_TYPE_MOTHERBOARD = "images_icon/mainboard.png";
 const HARDWARE_TYPE_CPU = "images_icon/cpu.png";
 const HARDWARE_TYPE_GPU = "images_icon/nvidia.png";
-//const HARDWARE_TYPE_RAM = "images_icon/ram.png";
+const HARDWARE_TYPE_RAM = "images_icon/ram.png";
 //const HARDWARE_TYPE_HDD = "images_icon/hdd.png"
 
 const MONITOR_TYPE_TEMPERATURE = 'images_icon/temperature.png';
 const MONITOR_TYPE_FAN = 'images_icon/fan.png';
-
+const MONITOR_TYPE_CLOCK = 'images_icon/clock.png';
+const MONITOR_TYPE_LOAD = 'images_icon/load.png';
 
 
 const state = {
@@ -107,6 +108,60 @@ const getters = {
         return 0;
     },
 
+    cpuSpeed: (state, getters) => {
+        let cpuSpecs = getters.getNodeByHardwareType(HARDWARE_TYPE_CPU).Children;
+        if( cpuSpecs && cpuSpecs.length ) {
+            let sensors = cpuSpecs.find(item => item.ImageURL === MONITOR_TYPE_CLOCK);
+            if( sensors && sensors.Children && sensors.Children.length ) {
+                let cpuTotal = sensors.Children.find( item => item.Text === 'CPU Core #1' );
+                if( cpuTotal ) {
+                    return cpuTotal.Value;
+                }
+            }
+        }
+        return 0;
+    },
+    gpuSpeed: (state, getters) => {
+        let gpuSpecs = getters.getNodeByHardwareType(HARDWARE_TYPE_GPU).Children;
+        if( gpuSpecs && gpuSpecs.length ) {
+            let sensors = gpuSpecs.find(item => item.ImageURL === MONITOR_TYPE_CLOCK);
+            if( sensors && sensors.Children && sensors.Children.length ) {
+                let gpuTotal = sensors.Children.find( item => item.Text === 'GPU Core' );
+                if( gpuTotal ) {
+                    return gpuTotal.Value;
+                }
+            }
+        }
+        return 0;
+    },
+
+    cpuUsage: (state, getters) => {
+        let cpuSpecs = getters.getNodeByHardwareType(HARDWARE_TYPE_CPU).Children;
+        if( cpuSpecs && cpuSpecs.length ) {
+            let sensors = cpuSpecs.find(item => item.ImageURL === MONITOR_TYPE_LOAD);
+            if( sensors && sensors.Children && sensors.Children.length ) {
+                let cpuTotal = sensors.Children.find( item => item.Text === 'CPU Total' );
+                if( cpuTotal ) {
+                    return cpuTotal.Value;
+                }
+            }
+        }
+        return 0;
+    },
+
+    ramUsage: (state, getters) => {
+        let ramSpecs = getters.getNodeByHardwareType(HARDWARE_TYPE_RAM).Children;
+        if( ramSpecs && ramSpecs.length ) {
+            let sensors = ramSpecs.find(item => item.ImageURL === MONITOR_TYPE_LOAD);
+            if( sensors && sensors.Children && sensors.Children.length ) {
+                let ramTotal = sensors.Children.find( item => item.Text === 'Memory' );
+                if( ramTotal ) {
+                    return ramTotal.Value;
+                }
+            }
+        }
+        return 0;
+    },
 
     // ramTODO: (state, getters) => {
     //     return getters.getNodeByHardwareType(HARDWARE_TYPE_RAM);
