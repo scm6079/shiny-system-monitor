@@ -7,9 +7,9 @@
       <img src="@/assets/exclamation-triangle.svg" class="alert">
     </div>
     <div class="tempBox">
-      <div class="cpuTemp">CPU {{ cpuTemp }}&deg; c</div>
+      <div class="cpuTemp" :style="cpuStyle">CPU {{ cpuTemp }}&deg; c</div>
       <hr>
-      <div class="gpuTemp">GPU {{ gpuTemp }}&deg; c</div>
+      <div class="gpuTemp" :style="gpuStyle">GPU {{ gpuTemp }}&deg; c</div>
     </div>
     <div class="fanSpeed">
       <img src="@/assets/fan-icon.svg" class="fanIcon">
@@ -39,7 +39,9 @@ export default {
       cpuTemp: 'cpuTemp',
       gpuTemp: 'gpuTemp',
       fanSpeed: 'fanSpeed',
-    })
+    }),
+    cpuStyle: () => {return 'color: #d46e1d'},
+    gpuStyle: () => {return 'color: #008185'},
   },
   watch: {
     monitor: function() {
@@ -67,19 +69,26 @@ export default {
 
       let w = this.context.canvas.width;
       let h = this.context.canvas.height;
-      let stroke = 22;
+      let stroke = 24;
 
-      let cpuDash = [stroke*3.3, stroke/1.1];
+      let cpuDash = [stroke*1.8, stroke/0.64];
       let cpuRadius = (w/2) - 12;
-      let cpuStartAngle = 0.782 * Math.PI;
-      let cpuEndAngle = 0.224 * Math.PI;
+      let cpuStartAngle = 0.786 * Math.PI;
+      let cpuEndAngle = 0.216 * Math.PI;
 
+      let gpuDash = [stroke*3.8, stroke/0.6];
       let gpuRadius = (w/2) - 68;
       let gpuStartAngle = 0.83 * Math.PI;
       let gpuEndAngle = 0.17 * Math.PI
 
+      let temperatureGradient = this.context.createLinearGradient(0, 0, w, 0);
+      temperatureGradient.addColorStop("0", '#05114c');
+      temperatureGradient.addColorStop("0.5" , '#148248');
+      temperatureGradient.addColorStop("1.0", '#f83434');
+
       // clear everything
       this.context.clearRect(0, 0, w, h);
+      this.context.lineCap = 'round';
 
       // draw CPU ring BG
       this.context.beginPath();
@@ -91,26 +100,31 @@ export default {
 
       // draw CPU ring FG
       this.context.beginPath();
-      this.context.arc(w/2, h/1.64, cpuRadius, cpuStartAngle, -0.84 * Math.PI, false);
+      this.context.arc(w/2, h/1.64, cpuRadius, cpuStartAngle, -0.198 * Math.PI, false);
+      //this.context.arc(w/2, h/1.64, cpuRadius, cpuStartAngle, cpuEndAngle, false);
       this.context.lineWidth = stroke;
-      this.context.strokeStyle = '#ff0000';
+      //this.context.strokeStyle = '#009671';
+      this.context.strokeStyle = temperatureGradient;
       this.context.setLineDash(cpuDash);
       this.context.stroke();
 
 
-      // draw GPU ring
+      // draw GPU ring BG
       this.context.beginPath();
       this.context.arc(w/2, h/1.64, gpuRadius, gpuStartAngle, gpuEndAngle, false);
       this.context.lineWidth = stroke;
       this.context.strokeStyle = '#ffffff1a';
-      // this.context.setLineDash([1, 0]);
-      this.context.setLineDash([stroke*4.6, stroke/0.8]);
+      this.context.setLineDash(gpuDash);
       this.context.stroke();
 
+      // draw GPU ring FG
+      this.context.beginPath();
+      this.context.arc(w/2, h/1.64, gpuRadius, gpuStartAngle, -.6*Math.PI, false);
+      this.context.lineWidth = stroke;
+      this.context.strokeStyle = temperatureGradient;
+      this.context.setLineDash(gpuDash);
+      this.context.stroke();
 
-      //this.context.beginPath();
-      //this.context.rect(0, 0, w, h);
-      //this.context.stroke();
 
 
     }
@@ -166,6 +180,7 @@ export default {
   bottom: 0;
   width: 100%;
   text-align: center;
+  color: #ccc;
 }
 .svgBg {
   position: absolute;
@@ -187,7 +202,7 @@ export default {
 }
 .tempBox hr {
   border-color: #666;
-  margin-top: -0.2em;
+  margin-top: -0.3vw;
 }
 .cpuTemp {
   font-weight: bold;
