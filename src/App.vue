@@ -1,14 +1,13 @@
 <template>
+  <div v-show="loading" style="position:absolute;right:0">
+    Loading...
+  </div>
   <TempGauge/>
   <LoadChart/>
   <Speedometer/>
 
-  <div v-show="loading">
-    Loading...
-  </div>
-
-  <button @click="refresh()">Refresh</button>
-  <button @click="cancelAutoUpdate()">Cancel</button>
+<!--  <button @click="refresh()">Refresh</button>-->
+<!--  <button @click="cancelAutoUpdate()">Cancel</button>-->
 </template>
 
 <script>
@@ -59,6 +58,7 @@ body, html {
 #grid {
 }
 #app {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   position: relative;
