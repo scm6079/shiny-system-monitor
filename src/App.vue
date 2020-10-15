@@ -1,5 +1,6 @@
 <template>
-  <div v-show="loading" class="loader">
+  <div class="loader" v-show="loading">
+    <div class="spinner"></div>
   </div>
   <TempGauge/>
   <LoadChart/>
@@ -71,20 +72,19 @@ body, html {
   position:absolute;
   right:2vw;
   top:2vw;
-
+  animation: fadeIn ease 2s;
+}
+.spinner {
   border: 2vw solid #ffffff44;
   border-radius: 50%;
   border-top: 2vw solid #a2dcf199;
   width: 4vw;
   height: 4vw;
-  -webkit-animation: spin 1.5s linear infinite; /* Safari */
   animation: spin 1.5s linear infinite;
 }
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 
 @keyframes spin {
