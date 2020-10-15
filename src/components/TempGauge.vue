@@ -12,7 +12,7 @@
       <div class="gpuTemp" :style="gpuStyle">GPU {{ gpuDisplayTemp }}&deg; c</div>
     </div>
     <div class="fanSpeed">
-      <img src="@/assets/fan-icon.svg" class="fanIcon">
+      <img src="@/assets/fan-icon.svg" class="fanIcon" v-if="fanSpeed">
       <div class="fanRpm">
         {{ animatedFanSpeed.toLocaleString() }} RPM
       </div>
@@ -173,7 +173,9 @@ export default {
       let currAngle = startAngle + (range * percent);
 
       this.arcFromBottom( w/2, h/0.775, w, h, radius, startAngle, endAngle, stroke, dash, '#ffffff1a');
-      this.arcFromBottom( w/2, h/0.775, w, h, radius, startAngle, currAngle, stroke, dash, '#9ddbf1');
+      if( this.fanSpeed ) {
+        this.arcFromBottom( w/2, h/0.775, w, h, radius, startAngle, currAngle, stroke, dash, '#9ddbf1');
+      }
     },
     updateCanvas: function() {
       if( !this.context ) return;
