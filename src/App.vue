@@ -1,6 +1,5 @@
 <template>
-  <div v-show="loading" style="position:absolute;right:0">
-    Loading...
+  <div v-show="loading" class="loader">
   </div>
   <TempGauge/>
   <LoadChart/>
@@ -55,8 +54,6 @@ body, html {
   padding: 0;
   background: radial-gradient(circle, rgb(1,17,43) 30%, rgb(0,0,0) 100%);
 }
-#grid {
-}
 #app {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -69,5 +66,29 @@ body, html {
   height: 100vw;
   overflow:hidden;
   color: white;
+}
+.loader {
+  position:absolute;
+  right:2vw;
+  top:2vw;
+
+  border: 2vw solid #ffffff44;
+  border-radius: 50%;
+  border-top: 2vw solid #a2dcf199;
+  width: 4vw;
+  height: 4vw;
+  -webkit-animation: spin 1.5s linear infinite; /* Safari */
+  animation: spin 1.5s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
